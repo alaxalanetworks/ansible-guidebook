@@ -1,0 +1,25 @@
+- hosts: all
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    ansible_network_os: ax
+    ansible_user: alaxala
+    ansible_password: alaxala
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_pass: alaxala
+
+  tasks:
+  - name: gather facts
+    ax_facts:
+      gather_subset:
+        - all
+
+  - name: configure vlan (interface)
+    ax_config:
+      lines:
+        - "switchport trunk allowed vlan add 1010"
+      parents: "interface {{ ansible_net_interfaces['1/0/10'].linespeed }} 1/0/10"
+      save_when: modified
+    when: "ansible_net_model == 'AX3660S-48T4XW'"

@@ -1,0 +1,57 @@
+- hosts: 10.100.1.102
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    ansible_command_timeout: 1200
+
+  tasks:
+    - name: generate a directory to store result
+      file: path="./result/"
+           state=directory
+
+    - name: gather ax facts "all"
+      ax_facts:
+        gather_subset:
+          - "all"
+
+    - name: check before Version
+      ax_command:
+        commands:
+          - "show version"
+      register: show_version_before
+
+    - name: get show version
+      copy:
+        content: "{{ show_version_before.stdout_lines[0] | join('\n') }}"
+        dest: "./result/version_{{ ansible_net_hostname }}_before.txt"
+
+    - name: compare local k.img filesize and network device's free space 
+      include_tasks: task_lib/cmp_filesize.yml
+
+    - name: firmware Version check
+      include_tasks: task_lib/firm_version_check.yml
+
+    - name: execute ppupdate for Backup Switch 
+      include_tasks: task_lib/backup_switch_ppupdate.yml
+
+    - name: execute ppupdate for Master Switch
+      include_tasks: task_lib/master_switch_ppupdate.yml
+
+    - name: check after Version
+      ax_command:
+        commands:
+          - show version
+      register: show_version_after
+
+    - name: get show version
+      copy:
+        content: "{{ show_version_after.stdout_lines[0] | join('\n') }}"
+        dest: "./result/version_{{ ansible_net_hostname }}_after.txt"
+
+    - name: get difference between before and after for group "all"
+      shell: "diff -u ./result/version_{{ ansible_net_hostname }}_before.txt
+                      ./result/version_{{ ansible_net_hostname }}_after.txt
+                        > ./result/version_{{ ansible_net_hostname }}_diff.txt"
+      register: result_diff
+      failed_when: result_diff.rc not in [0, 1]

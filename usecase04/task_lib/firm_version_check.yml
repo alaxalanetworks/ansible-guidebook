@@ -1,0 +1,17 @@
+    - name: get ppupdate text
+      ax_command:
+        commands:
+          - command: ppupdate {{ remote_firm_path }}k.img
+            prompt:
+              - Do you wish to continue?
+            answer: n
+      register: ppupdate_text
+
+    - name: parse firmware Current/New Version
+      set_fact:
+        check_ver: "{{ ppupdate_text.stdout[0] | parse_cli_textfsm( template_ppupdate_text ) }}"
+
+    - name: assert if firmware version is not expected
+      assert:
+        that:
+          - "check_ver[0].NEW_VERSION == firm_check_version"

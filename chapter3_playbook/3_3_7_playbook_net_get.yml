@@ -1,0 +1,25 @@
+- hosts: all
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    ansible_network_os: ax
+    ansible_user: alaxala
+    ansible_password: alaxala
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_pass: alaxala
+
+  tasks:
+    - name: copy running-config
+      ax_command:
+        commands:
+          - command: copy running-config backup_config.cnf
+            prompt: 'Configuration file copy to /mc0/usr/home/alaxala/backup_config.cnf\? \(y\/n\):'
+            answer: y
+
+    - name: copy file from network device to ansible controller
+      net_get:
+        dest: "backup_config.cnf"
+        src: "/mc0/usr/home/alaxala/backup_config.cnf"
+        protocol: scp

@@ -1,0 +1,16 @@
+#arument         (cli),vid,vni,vtep
+#return value    -
+#output file     -
+
+    - name: configuer "vxlan-vni <vni> in vlan <vid>" 
+      ax_config:
+        lines:
+            - "vxlan-vni {{ vni }}"
+        parents: "vlan {{ vid }}"
+    
+
+    - name: configuer "member vni add <vin> in <vtep>"
+      ax_config:
+        lines:
+           - "member vni add {{ vni }}"
+        parents: "interface vxlan {{ vtep }}"  

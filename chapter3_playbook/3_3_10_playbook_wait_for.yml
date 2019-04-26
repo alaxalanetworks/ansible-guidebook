@@ -1,0 +1,34 @@
+- hosts: all
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    ansible_network_os: ax
+    ansible_user: alaxala
+    ansible_password: alaxala
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_pass: alaxala
+
+  tasks:
+    - name: reload commands that require answering a prompt
+      ax_command:
+        commands:
+          - command: "reload no-dump-image"
+            prompt:
+              - 'Restart OK?\? \(y\/n\):'
+            answer: y
+      async: 30
+      poll: 0
+
+    - name: wait for booting up
+      wait_for:
+        host: "{{ inventory_hostname }}"
+        port: 22
+        state: started
+        delay: 60
+
+    - name: show system
+      ax_command:
+        commands:
+          - show system

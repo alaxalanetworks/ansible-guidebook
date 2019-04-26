@@ -1,0 +1,10 @@
+    - name: do show tech-suport ramdisk
+      ax_command:
+        commands:
+          - command: show tech-support ramdisk
+
+    - name: copy file from network device
+      net_get:
+        dest: "./result/{{ ansible_net_hostname }}_showtech.txt"
+        src: "/ramdisk/showtech.txt"
+        protocol: sftp

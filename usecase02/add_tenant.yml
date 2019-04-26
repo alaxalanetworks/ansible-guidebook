@@ -1,0 +1,61 @@
+- hosts: all
+  gather_facts: no
+  connection: network_cli
+
+  max_fail_percentage: 0
+   
+  tasks: 
+                      
+    - name: generate a directory to store result
+      file: path="./result/"
+            state=directory
+
+            
+    - name: gather ax facts "all"
+      ax_facts:
+        gather_subset:
+          - "all"
+        
+        
+    - name: copy running-config into rconf_<hostname>_before.cnf
+      copy:
+        content: "{{ ansible_net_config}}"
+        dest: "./result/rconf_{{ ansible_net_hostname }}_before.cnf"
+           
+    
+    - name: include "check_vlan_absent.yml" for group "all"
+      include_tasks: task_lib/check_vlan_absent.yml  
+
+      
+    - name: include "check_vni_absent.yml" for group "core"
+      include_tasks: task_lib/check_vni_absent.yml  
+      when: "inventory_hostname in groups['core']"    
+
+      
+    - name: include "add_vlan.yml" for group "all"
+      include_tasks: task_lib/add_vlan.yml  
+
+      
+    - name: include "add_vni.yml " for group "core"
+      include_tasks: task_lib/add_vni.yml 
+      when: "inventory_hostname in groups['core']"            
+      
+
+    - name: gather ax facts "all"
+      ax_facts:
+        gather_subset:
+          - "all"
+        
+        
+    - name: copy running-config into rconf_<hostname>_after.cnf
+      copy:
+        content: "{{ ansible_net_config}}"
+        dest: "./result/rconf_{{ ansible_net_hostname }}_after.cnf"
+
+        
+    - name: get difference between before and after for group "all"
+      shell: "diff -u ./result/rconf_{{ ansible_net_hostname }}_before.cnf
+                      ./result/rconf_{{ ansible_net_hostname }}_after.cnf
+                        > ./result/rconf_{{ ansible_net_hostname }}_diff.txt"
+      register: result_diff
+      failed_when: result_diff.rc not in [0, 1]

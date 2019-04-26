@@ -1,0 +1,25 @@
+    - name: do show tech-suport flash
+      ax_command:
+        commands:
+          - command: show tech-support > showtech.txt
+            prompt: "Specify Password for Administrator Mode.:"
+            answer: "{{ ansible_become_pass }}"
+
+    - name: copy file from network device
+      net_get:
+        dest: "./result/{{ ansible_net_hostname }}_showtech.txt"
+        src: "/mc0/usr/home/alaxala/showtech.txt"
+        protocol: scp
+
+    - name: check file rmdump
+      ax_command:
+        commands: "ls /dump0"
+      register: rmdump_check
+
+    - name: copy dump-file from network device
+      net_get:
+        dest: "./result/{{ ansible_net_hostname }}_rmdump"
+        src: "/dump0/rmdump"
+        protocol: scp
+      when: 
+        - rmdump_check.stdout[0] == "rmdump"

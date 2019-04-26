@@ -1,0 +1,22 @@
+- hosts: all
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    ansible_network_os: ax
+    ansible_user: alaxala
+    ansible_password: alaxala
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_pass: alaxala
+      
+  tasks:
+    - name: gather facts
+      ax_facts:
+       gather_subset:
+        - interfaces
+
+    - name: show interfaces
+      ax_command:
+       commands:
+        - show interfaces {{ ansible_net_interfaces['1/0/1'].linespeed }} 1/0/1

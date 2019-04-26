@@ -1,0 +1,24 @@
+#argument        vni
+#return value    assertion
+#output file     -
+
+    - name: execute "show vxlan vni"  
+      ax_command:
+        commands:
+           - show vxlan vni
+      register: result_show_vxlan_vni
+
+      
+    - name: parse result_show_vxlan_vni
+      set_fact:
+        parse_show_vxlan_vni: "{{ result_show_vxlan_vni.stdout[0]
+                   | parse_cli_textfsm( template_show_vxlan_vni ) }}"      
+
+    - name: debug
+      debug:
+        msg: '{{ parse_show_vxlan_vni }}'
+                   
+    - name: check if <vni> absents on target hosts
+      assert: 
+        that: 
+           - "'{{ vni }}' not in (parse_show_vxlan_vni | map(attribute='VNI') | list)"

@@ -1,0 +1,25 @@
+- hosts: all
+  gather_facts: no
+  connection: network_cli
+  max_fail_percentage: 0
+
+  vars:
+    ansible_command_timeout: 1200
+
+  tasks:
+    - name: generate a directory to store result
+      file: path="./result/"
+            state=directory
+
+    - name: gather ax facts "all"
+      ax_facts:
+        gather_subset:
+          - "all"
+
+    - name: AX3600S do task
+      include_tasks: task_lib/ax3600s_task.yml
+      when: "'AX36' in ansible_net_model"
+
+    - name: AX2500S do task
+      include_tasks: task_lib/ax2500s_task.yml
+      when: "'AX25' in ansible_net_model"

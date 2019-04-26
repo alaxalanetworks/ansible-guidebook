@@ -1,0 +1,23 @@
+- hosts: all
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    ansible_network_os: ax
+    ansible_user: alaxala
+    ansible_password: alaxala
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_pass: alaxala
+
+  tasks:
+    - name: show system
+      ax_command:
+        commands:
+         - 'show system'
+      register: show_system
+
+    - name: copy show system
+      copy:
+        content: "{{ show_system.stdout_lines[0] | join('\n') }}"
+        dest: ./{{ inventory_hostname }}_show_system.txt

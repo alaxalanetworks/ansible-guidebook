@@ -1,0 +1,12 @@
+#alaxala_show_port.template
+Value PORT (\d+/[\d\s]+)
+Value NAME (\S+)
+Value STATUS (\S+)
+Value SPEED (\S+)
+Value DUPLEX (\S+)
+Value FCTL (\S+)
+Value MTU (\S+)
+Value CHGR (\S+)
+
+Start
+  ^\s${PORT}\s+${NAME}\s+${STATUS}\s+${SPEED}\s+${DUPLEX}\s+${FCTL}\s+${MTU}\s+${CHGR} -> Record

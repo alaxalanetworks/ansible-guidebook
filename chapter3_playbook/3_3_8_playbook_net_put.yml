@@ -1,0 +1,18 @@
+- hosts: all
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    ansible_network_os: ax
+    ansible_user: alaxala
+    ansible_password: alaxala
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_pass: alaxala
+
+  tasks:
+    - name: copy file from ansible controller to network device
+      net_put:
+        dest: "/mc0/usr/var/update/k.img"
+        src: "AX36L3S1114Q-127.img.gz"
+        protocol: scp

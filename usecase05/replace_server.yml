@@ -1,0 +1,52 @@
+- hosts: all
+  gather_facts: no
+  connection: network_cli
+  max_fail_percentage: 0
+   
+  vars:
+    old_ntp_server_ip: '10.0.0.1'
+    new_ntp_server_ip: '10.0.0.2'
+
+  tasks: 
+    - name: generate a directory to store result
+      file: path="./result/"
+            state=directory
+            
+    - name: gather ax facts "all"
+      ax_facts:
+        gather_subset:
+          - "all"
+        
+    - name: copy running-config into rconf_<hostname>_before.cnf
+      copy:
+        content: "{{ ansible_net_config}}"
+        dest: "./result/rconf_{{ ansible_net_hostname }}_before.cnf"
+    
+    - name: add new ntp server
+      ax_config: 
+        lines:
+          - ntp server {{ new_ntp_server_ip }}
+        save_when: modified
+
+    - name: delete old ntp server
+      ax_config: 
+        lines:
+          - no ntp server {{ old_ntp_server_ip }}
+        save_when: modified
+
+    - name: gather ax facts "all"
+      ax_facts:
+        gather_subset:
+          - "all"
+        
+    - name: copy running-config into rconf_<hostname>_after.cnf
+      copy:
+        content: "{{ ansible_net_config}}"
+        dest: "./result/rconf_{{ ansible_net_hostname }}_after.cnf"
+        
+    - name: get difference between before and after for group "all"
+      shell: "diff -u ./result/rconf_{{ ansible_net_hostname }}_before.cnf
+                      ./result/rconf_{{ ansible_net_hostname }}_after.cnf
+                        > ./result/rconf_{{ ansible_net_hostname }}_diff.txt"
+      register: result_diff
+      failed_when: result_diff.rc not in [0, 1]

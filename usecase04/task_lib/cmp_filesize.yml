@@ -1,0 +1,27 @@
+    - name: get local firmware file size
+      stat:
+        path: "{{ local_firm_path }}{{ firm_filename }}"
+      register: result
+      delegate_to: localhost
+
+    - name: get show flash result
+      ax_command:
+        commands:
+          - show flash
+      register: result_show_flash
+
+    - name: get network device free space
+      set_fact:
+        flash_free: "{{ result_show_flash.stdout[0] | parse_cli_textfsm( template_show_flash ) }}"
+
+    - name: assert if network device's free space is lower than firmware filesize
+      assert:
+        that:
+          - "{{ flash_free[0].FREE_BYTE|regex_replace(',') }} > result.stat.size/1024"
+          - "{{ flash_free[1].FREE_BYTE|regex_replace(',') }} > result.stat.size/1024"
+
+    - name: transfer firmware to network device
+      net_put:
+        src: "{{ local_firm_path }}{{ firm_filename }}"
+        dest: "{{ remote_firm_path }}k.img"
+        protocol: scp

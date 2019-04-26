@@ -1,2 +1,2 @@
-# guidebook
-Repository for playbooks published in AX modules for Ansible Usage Guidebook
+# AX modules for Ansible活用ガイドブック サンプルplaybook
+アラクサラ会員様専用サイトであるビジネスパートナー様サイトおよびシステムインテグレーター会員様専用サイトに掲載しているAX modules for Ansible活用ガイドブックの「第4章 各ユースケースでのサンプルplaybook」のplaybookです。

@@ -1,0 +1,28 @@
+- hosts: all
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    ansible_network_os: ax
+    ansible_user: alaxala
+    ansible_password: alaxala
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_pass: alaxala
+
+    template_show_port: "alaxala_show_port.template"
+
+  tasks:
+    - name: "show port"
+      ax_command:
+        commands:
+          - "show port 1/0/1"
+      register: show_port
+
+    - name: parse "show port"
+      set_fact:
+        parse_show_port: "{{ show_port.stdout[0] | parse_cli_textfsm( template_show_port ) }}"
+
+    - name: parse "show port" msg
+      debug:
+        msg: "{{ show_port.stdout[0] | parse_cli_textfsm( template_show_port ) }}"
