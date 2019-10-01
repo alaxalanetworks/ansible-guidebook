@@ -1,2 +1,2 @@
-# AX modules for Ansible活用ガイドブック サンプルplaybook
+# AX modules for Ansible活用ガイドブック
 アラクサラ会員様専用サイトであるビジネスパートナー様サイトおよびシステムインテグレーター会員様専用サイトに掲載しているAX modules for Ansible活用ガイドブックの「第3章 3.3 基本的なモジュール、ディレクティブ、プラグインの記述サンプル」、「第4章 各ユースケースでのサンプルplaybook」のplaybookです。
