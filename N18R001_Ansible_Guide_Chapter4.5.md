@@ -54,12 +54,12 @@
 |--------------------| ------------------|
 |ax\_command  | 2.2.1章参照|
 |ax\_facts  | 2.2.3章参照|
-|set\_fact  | [3.3.5章参照]()|
-|assert  | [3.3.5章参照]()|
-|net\_put  | [3.3.8章参照]()|
-|prompt, answer  | [3.3.9章参照]()|
-|async, poll  |   [3.3.10章参照]()|
-|wait\_for  | [3.3.10章参照]()|
+|set\_fact  | [3.3.5章参照](./N18R001_Ansible_Guide_Chapter3.md)|
+|assert  | [3.3.5章参照](./N18R001_Ansible_Guide_Chapter3.md)|
+|net\_put  | [3.3.8章参照](./N18R001_Ansible_Guide_Chapter3.md)|
+|prompt, answer  | [3.3.9章参照](./N18R001_Ansible_Guide_Chapter3.md)|
+|async, poll  |   [3.3.10章参照](./N18R001_Ansible_Guide_Chapter3.md)|
+|wait\_for  | [3.3.10章参照](./N18R001_Ansible_Guide_Chapter3.md)|
 |stat  | ファイルのステータスを取得します|
 |until, retries | リトライ処理を実行します|
 |pause |一定時間待ちます|
