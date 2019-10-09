@@ -1,0 +1,22 @@
+- hosts: all
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    ansible_network_os: ax
+    ansible_user: alaxala
+    ansible_password: alaxala
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_pass: alaxala
+
+  tasks:
+    - block:
+      - name: get current time
+        set_fact:
+          curtime: "{{ now(False, '%Y-%m-%d-%H%M%S') }}"
+
+      - name: print current time
+        debug:
+          var: curtime
+      delegate_to: localhost

@@ -7,8 +7,8 @@
 
     local_firm_path: './firmware/'
     remote_firm_path: '/mc0/usr/var/update/'
-    firm_filename: 'AX36L3M1201F-312.img.gz'
-    firm_check_version: '12.1.F'
+    firm_filename: 'AX36L3M1201H-527.img.gz'
+    firm_check_version: '12.1.H'
     backup_sw: [0,2,1]
 
     template_show_switch: 'template/show_switch.template'

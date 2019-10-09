@@ -1,0 +1,28 @@
+- hosts: all
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    ansible_network_os: ax
+    ansible_user: alaxala
+    ansible_password: alaxala
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_pass: alaxala
+
+  tasks:
+    - name: Get AX facts info
+      ax_facts:
+        gather_subset: "interfaces"
+
+    - name: Read VLAN information from CSV file
+      read_csv:
+        path: ./vlan.csv
+      register: csv_info
+      delegate_to: localhost
+
+    - name: debug print VLAN information
+      debug:
+        msg: "Host: {{ item.host }}, VLAN ID: {{ item.vid }}, Mode: {{ item.mode }}, Port: {{ item.port }}"
+      with_items: "{{ csv_info.list }}"
+      delegate_to: localhost

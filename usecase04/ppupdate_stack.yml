@@ -1,4 +1,4 @@
-- hosts: 10.100.1.102
+- hosts: 10.100.1.101
   gather_facts: no
   connection: network_cli
 

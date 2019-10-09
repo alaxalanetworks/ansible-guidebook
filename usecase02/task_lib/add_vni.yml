@@ -7,6 +7,7 @@
         lines:
             - "vxlan-vni {{ vni }}"
         parents: "vlan {{ vid }}"
+        save_when: modified
     
 
     - name: configuer "member vni add <vin> in <vtep>"
@@ -14,3 +15,4 @@
         lines:
            - "member vni add {{ vni }}"
         parents: "interface vxlan {{ vtep }}"  
+        save_when: modified

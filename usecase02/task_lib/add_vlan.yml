@@ -6,11 +6,13 @@
       ax_config:
         lines:
            - vlan {{ vid }}
-   
+        save_when: modified
+
     - name: configure "switchport trunk allowed vlan add <vid> in <port> "
       ax_config:
         lines:
            - switchport trunk allowed vlan add {{ vid }}
         parents: "interface {{ ansible_net_interfaces[ item ].linespeed }} {{ item }}"
+        save_when: modified
       with_items: "{{ port }}"
 
