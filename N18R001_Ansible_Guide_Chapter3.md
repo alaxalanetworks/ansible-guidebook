@@ -1,4 +1,4 @@
-[→目次に戻る](/README.md)
+[→目次に戻る](./README.md)
 
 # 3. playbookの作成
 
@@ -867,4 +867,4 @@ PLAY RECAP *********************************************************************
 AXモジュールの使用上の注意事項については、「[AX modules for Ansible 運用ガイドの3.4 使用上の注意事項](https://www.alaxala.com/jp/techinfo/archive/manual/ANSIBLE/PDF/1_3/OP-GUIDE-SOFT-AM-2303_R3.pdf#page=45)」 を参照してください。
 
 [→4.各ユースケースでのサンプルplaybook](/N18R001_Ansible_Guide_Chapter4.1.md)  
-[→目次に戻る](/README.md)
+[→目次に戻る](./README.md)

@@ -1,4 +1,4 @@
-[→目次に戻る](/README.md)
+[→目次に戻る](./README.md)
 
 # 4. 各ユースケースでのサンプルplaybook
 
@@ -67,4 +67,4 @@ edge
 |エッジスイッチ |AX2530S-2  |[edge_sw-2_config.txt](/config/edge_sw-2_config.txt) |
 
 [→4.2 フィルタエントリの追加](/N18R001_Ansible_Guide_Chapter4.2.md)  
-[→目次に戻る](/README.md)
+[→目次に戻る](./README.md)

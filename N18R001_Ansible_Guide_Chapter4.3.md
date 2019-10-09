@@ -1,4 +1,4 @@
-[→目次に戻る](/README.md)
+[→目次に戻る](./README.md)
 
 ## 4.3  VLANおよびVXLANの追加
 
@@ -590,4 +590,4 @@ KEY 09/26 18:07:45 alaxala(ttyp0):AX3660S-1> set terminal pager disable
 (注) 弊社環境にて、playbook起動から終了までを計測した時間です。
 
 [→4.4 ネットワーク装置の障害情報採取](/N18R001_Ansible_Guide_Chapter4.4.md)  
-[→目次に戻る](/README.md)
+[→目次に戻る](./README.md)

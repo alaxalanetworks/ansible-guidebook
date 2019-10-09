@@ -1,4 +1,4 @@
-[→目次に戻る](/README.md)
+[→目次に戻る](./README.md)
 
 ## 4.6  NTPサーバ追加，移設にともなうネットワーク装置の設定
 
@@ -358,4 +358,4 @@ KEY 09/25 13:03:34 alaxala(ttyp0):AX3660S-1> set terminal pager disable
 
 (注) 弊社環境にて、playbook起動から終了までを計測した時間です。
 
-[→目次に戻る](/README.md)
+[→目次に戻る](./README.md)

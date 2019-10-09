@@ -1,4 +1,4 @@
-[→目次に戻る](/README.md)
+[→目次に戻る](./README.md)
 
 ## 4.2 フィルタエントリの追加
 
@@ -303,4 +303,4 @@ KEY 09/24 11:51:52 alaxala(ttyp0):AX3660S-1> set terminal pager disable
 (注) 弊社環境にて、playbook起動から終了までを計測した時間です。
 
 [→4.3 VLANおよびVXLANの追加](/N18R001_Ansible_Guide_Chapter4.3.md)  
-[→目次に戻る](/README.md)
+[→目次に戻る](./README.md)
